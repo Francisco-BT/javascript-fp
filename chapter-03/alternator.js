@@ -1,12 +1,7 @@
-const alternator = (f, g) => {
-  let current = 0;
+const alternator = (f1, f2) => {
   return (...args) => {
-    if (current % 2 === 0) {
-      f(...args);
-    } else {
-      g(...args);
-    }
-    current += 1;
+    f1(...args);
+    [f1, f2] = [f2, f1];
   };
 };
 
