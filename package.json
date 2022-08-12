@@ -1,0 +1,24 @@
+{
+  "name": "javascript-fp",
+  "version": "1.0.0",
+  "description": "Repo to learn functional programming using javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --silent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Francisco-BT/javascript-fp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Francisco-BT/javascript-fp/issues"
+  },
+  "homepage": "https://github.com/Francisco-BT/javascript-fp#readme",
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "jest": "^28.1.3"
+  }
+}
