@@ -61,4 +61,5 @@ console.log(getRandomFileName(".pdf")); // "OIFADZKKNVAH.pdf"
 
 module.exports = {
   getRandomLetter,
+  getRandomFileName,
 };
