@@ -58,3 +58,7 @@ console.log(getRandomFileName(".pdf")); // "DCHKTMNWFHYZ.pdf"
 console.log(getRandomFileName(".pdf")); // "GBTEFTVVHADO.pdf"
 console.log(getRandomFileName(".pdf")); // "ATCBVUOSXLXW.pdf"
 console.log(getRandomFileName(".pdf")); // "OIFADZKKNVAH.pdf"
+
+module.exports = {
+  getRandomLetter,
+};
