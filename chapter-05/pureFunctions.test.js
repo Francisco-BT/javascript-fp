@@ -2,6 +2,7 @@ const {
   isOldEnoughPure,
   roundFixPure,
   getRandomLetterPure,
+  getRandomFileNamePure,
 } = require("./pureFunctions");
 
 describe("isOldEnough", () => {
@@ -70,5 +71,25 @@ describe("getRandomLetterPure", function () {
     const letter3 = getRandomLetterPure(f);
     expect(letter1.charCodeAt(0)).toBeLessThan(letter2.charCodeAt(0));
     expect(letter2.charCodeAt(0)).toBeLessThan(letter3.charCodeAt(0));
+  });
+});
+
+describe("getRandomFileNamePure", function () {
+  let a = [];
+  const f = () => a.shift();
+
+  beforeEach(() => {
+    a = "SORTOFRANDOM".split("");
+  });
+
+  it("uses the given letters for the file name", () => {
+    const fileName = getRandomFileNamePure("", f);
+    expect(fileName.startsWith("SORTOFRANDOM")).toBe(true);
+  });
+
+  it("includes the right extension, and has the right length", () => {
+    const fileName = getRandomFileNamePure(".pdf", f);
+    expect(fileName.endsWith(".pdf")).toBe(true);
+    expect(fileName.length).toBe(16);
   });
 });
