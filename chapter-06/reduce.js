@@ -38,3 +38,7 @@ const average4 = (arr) => {
 };
 
 console.log("with average4 ", average4(myArray)); // 27.166667
+
+module.exports = {
+  average,
+};
