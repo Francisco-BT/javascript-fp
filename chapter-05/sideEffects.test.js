@@ -86,4 +86,12 @@ describe("shuffle", () => {
     expect(a.includes(4)).toBe(true);
     expect(a.includes(56)).toBe(true);
   });
+
+  it("should works with repeated values", () => {
+    let a = [1, 2, 3, 1];
+    shuffle(a);
+    expect(a.filter((a) => a === 1)).toHaveLength(2);
+    expect(a.includes(2)).toBe(true);
+    expect(a.includes(3)).toBe(true);
+  });
 });
