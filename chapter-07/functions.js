@@ -119,6 +119,74 @@ const memoize4 = (fn) => {
   };
 };
 
+const once = (func) => {
+  let done = false;
+  return (...args) => {
+    if (!done) {
+      done = true;
+      func(...args);
+    }
+  };
+};
+
+const once2 = (func) => {
+  let done = false;
+  let result;
+  return (...args) => {
+    if (!done) {
+      done = true;
+      result = func(...args);
+    }
+    return result;
+  };
+};
+
+const onceAndAfter = (f, g) => {
+  let done = false;
+  return (...args) => {
+    if (!done) {
+      done = true;
+      return f(...args);
+    } else {
+      return g(...args);
+    }
+  };
+};
+
+const onceAndAfter2 = (f, g) => {
+  let toCall = f;
+  return (...args) => {
+    let result = toCall(...args);
+    toCall = g;
+    return result;
+  };
+};
+
+const not =
+  (fn) =>
+  (...args) =>
+    !fn(...args);
+
+const filterNot = (arr) => (fn) => arr.filter(not(fn));
+
+const spanishComparison = (a, b) => a.localeCompare(b, "es");
+
+const invert =
+  (fn) =>
+  (...args) =>
+    -fn(...args);
+
+const arity =
+  (fn, n) =>
+  (...args) =>
+    fn(...args.slice(0, n));
+
+const unary = (fn) => arity(fn, 1);
+
+const binary = (fn) => arity(fn, 2);
+
+const ternary = (fn) => arity(fn, 3);
+
 module.exports = {
   someFunction,
   addLogging,
@@ -133,4 +201,16 @@ module.exports = {
   memoize2,
   memoize3,
   memoize4,
+  once,
+  once2,
+  onceAndAfter,
+  onceAndAfter2,
+  not,
+  filterNot,
+  spanishComparison,
+  invert,
+  unary,
+  binary,
+  ternary,
+  arity,
 };

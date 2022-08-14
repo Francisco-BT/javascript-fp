@@ -5,6 +5,9 @@ const {
   subtract,
   addTiming,
   memoize,
+  onceAndAfter2,
+  spanishComparison,
+  invert,
 } = require("./functions");
 let { fib } = require("./functions");
 
@@ -44,3 +47,20 @@ addTiming(fibMemoize)(45);
 addTiming(fibMemoize)(45);
 addTiming(fibMemoize)(40);
 addTiming(fibMemoize)(35);
+
+const squeak = (x) => console.log(x, "squeak!!");
+const creak = (x) => console.log(x, "creak!!");
+const makeSound = onceAndAfter2(squeak, creak);
+
+makeSound("door!");
+makeSound("door!");
+makeSound("door!");
+makeSound("door!");
+
+const palabras = ["ñandú", "oasis", "mano", "natural", "mítico", "musical"];
+
+console.log("sort: ", palabras.sort(spanishComparison));
+
+console.log("invert sort: ", palabras.sort(invert(spanishComparison)));
+
+console.log("using unary fn: ", ["123.45", "-67.8", "90"].map(unary(parseInt)));
