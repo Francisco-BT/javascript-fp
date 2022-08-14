@@ -1,26 +1,50 @@
-const a = [[1, 2], [3, 4, [5, 6, 7]], 8, [[[9, 10]]]];
-const range = (start, stop) =>
-  new Array(stop - start).fill(0).map((_, i) => start + i);
-
-console.log("default depth: ", a.flat()); // or a.flat(1)
-
-console.log("depth 2: ", a.flat(2));
-
-console.log("depth Infinity: ", a.flat(Infinity));
-
-const distances = [
-  [0, 20, 35, 40],
-  [20, 0, 10, 50],
-  [35, 10, 0, 30],
-  [40, 50, 30, 0],
+const characters = [
+  { name: "Fred", plays: "bowling" },
+  { name: "Barney", plays: "chess" },
+  { name: "Wilma", plays: "bridge" },
+  { name: "Betty", plays: "checkers" },
+  { name: "Pebbles", plays: "chess" },
 ];
 
-const maxDist1 = Math.max(...distances.flat());
-console.log("max distance using Math.max: ", maxDist1);
+const names = characters
+  .filter(
+    (character) => character.plays === "chess" || character.plays === "checkers"
+  )
+  .map((c) => `<li>${c.name}</li>`);
+const html = ["<div>", "<ul>", ...names, "</div>", "</ul>"].reduce(
+  (a, b) => `${a + b}\n`,
+  ""
+);
+console.log("html is: ", html);
 
-const maxDist2 = distances.flat().reduce((p, d) => Math.max(p, d), 0);
-console.log("max distance using flat and reduce: ", maxDist1);
+const range2 = (start, stop, step = Math.sign(stop - start)) =>
+  new Array(Math.ceil((stop - start) / step))
+    .fill(0)
+    .map((v, i) => start + i * step);
 
+console.log(range2(1, 10)); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+console.log(range2(1, 10, 2)); // [1, 3, 5, 7, 9]
+console.log(range2(1, 10, 3)); // [1, 4, 7]
+console.log(range2(1, 10, 6)); // [1, 7]
+console.log(range2(1, 10, 11)); // [1]
+
+console.log(range2(21, 10)); // [21, 20, 19, ... 13, 12, 11]
+console.log(range2(21, 10, -3)); // [21, 18, 15, 12]
+console.log(range2(21, 10, -4)); // [21, 17, 13]
+console.log(range2(21, 10, -7)); // [21, 14]
+console.log(range2(21, 10, -12)); // [21]
+
+const myData = [
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9, 10, 11, 12],
+];
+const dataToCsv = (arr) =>
+  arr.map((data) => data.join(",")).reduce((a, b) => `${a}\n${b}`, "");
+const myCsv = dataToCsv(myData);
+console.log("my csv: ", myCsv);
+
+// 5.8 better output
 const apiAnswer = [
   {
     country: "AR",
@@ -65,33 +89,16 @@ const apiAnswer = [
   },
 ];
 
-const cities = apiAnswer
-  .map((x) => x.states)
-  .flat()
-  .map((y) => y.cities)
-  .flat();
-
 const citiesFlatMap = apiAnswer
-  .flatMap((x) => x.states)
-  .flatMap((y) => y.cities);
+  .flatMap((c) => c.states.map((s) => ({ ...s, country: c.name })))
+  .flatMap((s) =>
+    s.cities.map((c) => ({ ...c, state: s.name, country: s.country }))
+  )
+  .map((data) => `${data.name} ${data.state} ${data.country}`);
 
-console.log("cities using map and flat together: ", cities);
-console.log("cities usinng flatMap: ", citiesFlatMap);
+console.log(citiesFlatMap);
 
-const names = [
-  "Winston Spencer Churchill",
-  "Plato",
-  "Abraham Lincoln",
-  "Socrates",
-  "Charles Darwin",
-];
-
-const lastNames = names.flatMap((name) => {
-  const s = name.split(" ");
-  return s.length === 1 ? [] : s.splice(1);
-});
-console.log("list of last names: ", lastNames);
-
+// 5.9. Old-style code only!
 const gettysburg = [
   "Four score and seven years ago our fathers brought forth, ",
   "on this continent, a new nation, conceived in liberty, and ",
@@ -122,32 +129,14 @@ const gettysburg = [
   "people, for the people, shall not perish from the earth.",
 ];
 
-console.log(gettysburg.flatMap((s) => s.split(" ")).length);
-
-const flatAll = (arr) =>
-  arr.reduce((f, v) => f.concat(Array.isArray(v) ? flatAll(v) : v), []);
-
-const flatOne1 = (arr) => [].concat(...arr);
-
-const flatOne2 = (arr) => arr.reduce((f, v) => f.concat(v), []);
-
-const flat1 = (arr, n = 1) => {
-  if (n === Infinity) {
-    return flatAll(arr);
-  } else {
-    let result = arr;
-    range(0, n).forEach(() => {
-      result = flat1(result);
-    });
-    return result;
+const wordCounting = (arr) => {
+  let totalWords = 0;
+  for (let i = 0; i < arr.length; i++) {
+    const words = arr[i].split(" ").length;
+    totalWords += words;
   }
+  return totalWords;
 };
 
-const flat2 = (arr, n = 1) =>
-  n === Infinity
-    ? flatAll(arr)
-    : n === 1
-    ? flatOne1(arr)
-    : flat2(flatOne(arr), n - 1);
-
-console.log("with empty values: ", flat2([22, , 9, , , 60, ,]));
+console.log("totalWords: ", wordCounting(gettysburg));
+console.log(gettysburg.join(" ").split(" ").length);
