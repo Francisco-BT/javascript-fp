@@ -1,5 +1,4 @@
 const {
-  someFunction,
   addLogging,
   changeSign,
   subtract,
@@ -8,7 +7,20 @@ const {
   onceAndAfter2,
   spanishComparison,
   invert,
+  unary,
 } = require("./functions");
+const {
+  getField,
+  demethodize1,
+  demethodize3,
+  demethodize2,
+  findOptimum,
+  findMaximum,
+  findMinimum,
+  Hero,
+  findBestHero,
+} = require("./changingFn");
+
 let { fib } = require("./functions");
 
 const substractWithLogging = addLogging(subtract);
@@ -64,3 +76,41 @@ console.log("sort: ", palabras.sort(spanishComparison));
 console.log("invert sort: ", palabras.sort(invert(spanishComparison)));
 
 console.log("using unary fn: ", ["123.45", "-67.8", "90"].map(unary(parseInt)));
+
+const myObject = {
+  a: "a value",
+  b: "b value",
+};
+
+console.log("getting a using getField: ", getField("a")(myObject));
+console.log("getting b using getField: ", getField("b")(myObject));
+
+const name = "functional";
+const demethodizedMap = demethodize1(Array.prototype.map);
+const toUpper = demethodize3(String.prototype.toUpperCase);
+
+const result = demethodizedMap(name, toUpper);
+console.log("result using demethodized methods: ", result);
+
+const toLocaleString = demethodize2(Number.prototype.toLocaleString);
+
+const numbers = [2209.6, 124.56, 1048576];
+const strings = numbers.map(toLocaleString);
+const strings2 = demethodizedMap(numbers, toLocaleString);
+console.log("numbers to string: ", strings);
+console.log("numbers to string using demethodized map: ", strings2);
+
+const myArray = [22, 9, 60, 12, 4, 56];
+console.log("optimum: ", findOptimum(myArray));
+
+console.log("find minimum: ", findMinimum(myArray));
+console.log("find maximum: ", findMaximum(myArray));
+
+const codingLeagueOfAmerica = [
+  new Hero("Forceful", 20, 15, 2),
+  new Hero("Electrico", 12, 21, 8),
+  new Hero("Speediest", 8, 11, 4),
+  new Hero("TechWiz", 6, 16, 30),
+];
+
+console.log("best hero is: ", findBestHero(codingLeagueOfAmerica));
