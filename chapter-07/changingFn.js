@@ -17,7 +17,7 @@ const promisify =
       fn(...args, (err, data) => (err ? reject(err) : resolve(data)))
     );
 
-const getField = (attr) => (obj) => obj[attr];
+const getField = (attr) => (obj) => attr && obj ? obj[attr] : undefined;
 
 const demethodize1 =
   (fn) =>
