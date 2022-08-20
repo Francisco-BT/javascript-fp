@@ -12,7 +12,7 @@ const {
   nonsense,
   partialByClosure,
 } = require("./partialApplication");
-const {} = require("./partialCurrying");
+const { partialCurryingByBind } = require("./partialCurrying");
 
 console.log("using addVAT: ", addVAT(20, 500));
 console.log("using addVAT: ", addVAT(15, 200));
@@ -49,3 +49,12 @@ const partialMake3Fix2 = partialMake3Fix1(5);
 console.log(partialMake3Fix2.toString());
 const finallMake3 = partialMake3Fix2(3);
 console.log(finallMake3.toString());
+
+// PARTIAL CURRYING
+const pcMake3 = partialCurryingByBind(make3);
+const pcMake3Fix2 = pcMake3(6, 5);
+const finallPCMake3 = pcMake3Fix2(8);
+console.log("Make 3 using partial currying: ", finallPCMake3);
+
+const g1 = partialCurryingByBind(make3)(1, 2);
+console.log("using partial currying with 2 fixed: ", g1(3));
