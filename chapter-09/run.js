@@ -10,6 +10,8 @@ const {
   tee3,
 } = require("./pipelining");
 
+const { City, chainify } = require("./chaining");
+
 // console.log(
 //   "count using pipeline: ",
 //   pipeline(getDir, filterOdt, count)("/Users/fbernabe/Documents/")
@@ -32,4 +34,11 @@ const {
 console.log(
   "pipeline using tap3: ",
   pipeline(getDir, tee3, count)("/Users/fbernabe/Documents")
+);
+
+let myCity = new City("Montevideo, Uruguay", -34.9011, -56.1645);
+myCity = chainify(myCity);
+console.log(
+  myCity.setName("Pune, India").setLat(18.5626).setLong(73.8087).getCoords(),
+  myCity.getName()
 );

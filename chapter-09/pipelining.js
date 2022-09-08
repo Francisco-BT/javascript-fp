@@ -75,10 +75,10 @@ const isNegative = (x) => x < 0;
 
 const isNegativeBalance = pipeline(getBalance, isNegative);
 
-const isNegativeBalance2 = pipeline(
-  curry(getField)("balance"),
-  curry(binaryOp(">"))(0)
-);
+// const isNegativeBalance2 = pipeline(
+//   curry(getField)("balance"),
+//   curry(binaryOp(">"))(0)
+// );
 
 module.exports = {
   curry,
