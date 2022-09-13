@@ -12,6 +12,8 @@ const {
 
 const { City, chainify } = require("./chaining");
 
+const { getUniqueWords } = require("./composing");
+
 // console.log(
 //   "count using pipeline: ",
 //   pipeline(getDir, filterOdt, count)("/Users/fbernabe/Documents/")
@@ -31,14 +33,24 @@ const { City, chainify } = require("./chaining");
 // pipeline2(getDir, tee, filterOdt, tee, count)("/Users/fbernabe/Documents");
 // pipeline2(getDir, tee2, filterOdt, tee2, count)("/Users/fbernabe/Documents");
 
-console.log(
-  "pipeline using tap3: ",
-  pipeline(getDir, tee3, count)("/Users/fbernabe/Documents")
-);
+// console.log(
+//   "pipeline using tap3: ",
+//   pipeline(getDir, tee3, count)("/Users/fbernabe/Documents")
+// );
 
 let myCity = new City("Montevideo, Uruguay", -34.9011, -56.1645);
 myCity = chainify(myCity);
-console.log(
-  myCity.setName("Pune, India").setLat(18.5626).setLong(73.8087).getCoords(),
-  myCity.getName()
-);
+// console.log(
+//   myCity.setName("Pune, India").setLat(18.5626).setLong(73.8087).getCoords(),
+//   myCity.getName()
+// );
+
+const GETTYSBURG_1_2 = `Four score and seven years ago 
+our fathers brought forth on this continent, a new nation, 
+conceived in liberty, and dedicated to the proposition 
+that all men are created equal. Now we are engaged in a 
+great civil war, testing whether that nation, or any 
+nation so conceived and so dedicated, can long
+endure.`;
+
+console.log(getUniqueWords(GETTYSBURG_1_2));
