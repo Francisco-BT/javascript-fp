@@ -14,6 +14,20 @@ const { City, chainify } = require("./chaining");
 
 const { getUniqueWords } = require("./composing");
 
+const {
+  testOdd,
+  duplicate,
+  testUnderFifty,
+  addThree,
+  testOddR,
+  duplicateR,
+  testUnderFiftyR,
+  addThreeR,
+  addToArray,
+  makeReducer1,
+  makeReducer2,
+} = require("./transducing");
+
 // console.log(
 //   "count using pipeline: ",
 //   pipeline(getDir, filterOdt, count)("/Users/fbernabe/Documents/")
@@ -53,4 +67,37 @@ great civil war, testing whether that nation, or any
 nation so conceived and so dedicated, can long
 endure.`;
 
-console.log(getUniqueWords(GETTYSBURG_1_2));
+// console.log(getUniqueWords(GETTYSBURG_1_2));
+
+// TRANSDUCING
+const myArray = [22, 9, 60, 24, 11, 63];
+const a0 = myArray
+  .filter(testOdd)
+  .map(duplicate)
+  .filter(testUnderFifty)
+  .map(addThree);
+
+// console.log("a0: ", a0);
+
+const a1 = myArray.reduce(
+  testOddR(duplicateR(testUnderFiftyR(addThreeR(addToArray)))),
+  []
+);
+console.log("a1: ", a1);
+
+const a2 = makeReducer1(myArray, [
+  testOddR,
+  duplicateR,
+  testUnderFiftyR,
+  addThreeR,
+]);
+
+console.log("a2: ", a2);
+
+const sum = makeReducer2(
+  myArray,
+  [testOddR, duplicateR, testUnderFiftyR, addThreeR],
+  (acc, value) => acc + value,
+  0
+);
+console.log("sum: ", sum);
